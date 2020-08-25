@@ -7,20 +7,20 @@ import javafx.stage.Stage;
 
 public class RegistStudentStage extends Stage {
 
-	public static Stage stage;
+    public static Stage stage;
 
-	public RegistStudentStage() {
-		try {
-			stage = new Stage();
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("RegistStudentView.fxml"));
-			Parent root = loader.load();
-			stage.setTitle("학습자 등록");
-			stage.setResizable(false);
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public RegistStudentStage() {
+        try {
+            stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("RegistStudentView.fxml"));
+            Parent root = loader.load();
+            stage.setTitle("학습자 등록");
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
