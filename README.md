@@ -15,3 +15,11 @@ JavaFX 사용법을 익히기 위한 테스트베드.
 管理者がJLPTの過去問を登録すると、ユーザーは模擬試験を進め結果を出力してもらえる。
 
 JavaFXを試すためのテストベッド。
+
+## To run
+
+`./gradlew run`
+
+## Screenshot
+
+![](/misc/img/screenshot.png)
