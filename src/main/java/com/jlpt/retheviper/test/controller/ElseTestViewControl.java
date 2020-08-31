@@ -1,11 +1,5 @@
 package com.jlpt.retheviper.test.controller;
 
-import java.io.File;
-import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
 import com.jlpt.retheviper.test.bean.Problem;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
@@ -14,25 +8,23 @@ import com.jlpt.retheviper.test.gui.ListenTestStage;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.service.TestManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
-
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class ElseTestViewControl implements Initializable {
     // 청해 제외 3과목 시험용 컨트롤러
@@ -88,44 +80,44 @@ public class ElseTestViewControl implements Initializable {
 
     private void startTest() { // 시험 시작
         switch (this.startTestButton.getText()) {
-        case "시작":
-            this.startTestButton.setText("중단");
-            this.tList = this.service.getProblem(subject);
-            this.score.setSubject(subject);
-            if (this.tList.size() > this.problemNumber) {
-                setProblem(this.problemNumber);
-            }
-            setTimer();
-            startTimerProgress();
-            break;
-        case "중단":
-            this.startTestButton.setText("시작");
-            final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
-                    "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-            if (result.get() == ButtonType.OK) {
-                final StudentManagementService sm = StudentManagementService.getInstance();
-                sm.recordScore(score);
-                ListenTestStage.stage.hide();
-            }
-            break;
+            case "시작":
+                this.startTestButton.setText("중단");
+                this.tList = this.service.getProblem(subject);
+                this.score.setSubject(subject);
+                if (this.tList.size() > this.problemNumber) {
+                    setProblem(this.problemNumber);
+                }
+                setTimer();
+                startTimerProgress();
+                break;
+            case "중단":
+                this.startTestButton.setText("시작");
+                final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
+                        "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
+                if (result.get() == ButtonType.OK) {
+                    final StudentManagementService sm = StudentManagementService.getInstance();
+                    sm.recordScore(score);
+                    ListenTestStage.stage.hide();
+                }
+                break;
         }
 
     }
 
     private void setTimer() { // 시험 시간 표시
         switch (timerSetting) {
-        case 0:
-            this.timer.setText("55분");
-            this.settedTime = 3300;
-            break;
-        case 1:
-            this.timer.setText("40분");
-            this.settedTime = 2400;
-            break;
-        case 2:
-            this.timer.setText("25분");
-            this.settedTime = 1500;
-            break;
+            case 0:
+                this.timer.setText("55분");
+                this.settedTime = 3300;
+                break;
+            case 1:
+                this.timer.setText("40분");
+                this.settedTime = 2400;
+                break;
+            case 2:
+                this.timer.setText("25분");
+                this.settedTime = 1500;
+                break;
         }
     }
 

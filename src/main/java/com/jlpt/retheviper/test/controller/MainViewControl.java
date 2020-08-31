@@ -1,5 +1,19 @@
 package com.jlpt.retheviper.test.controller;
 
+import com.jlpt.retheviper.test.Main;
+import com.jlpt.retheviper.test.bean.Score;
+import com.jlpt.retheviper.test.gui.*;
+import com.jlpt.retheviper.test.service.StudentManagementService;
+import com.jlpt.retheviper.test.util.Calculater;
+import com.jlpt.retheviper.test.util.CreateAlert;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
@@ -8,26 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.jlpt.retheviper.test.Main;
-import com.jlpt.retheviper.test.bean.Score;
-import com.jlpt.retheviper.test.gui.DataManagementStage;
-import com.jlpt.retheviper.test.gui.LoginStage;
-import com.jlpt.retheviper.test.gui.PrepareForTestStage;
-import com.jlpt.retheviper.test.gui.RegistStudentStage;
-import com.jlpt.retheviper.test.gui.RemoveStudentStage;
-import com.jlpt.retheviper.test.gui.ScoreStage;
-import com.jlpt.retheviper.test.service.StudentManagementService;
-import com.jlpt.retheviper.test.util.Calculater;
-import com.jlpt.retheviper.test.util.CreateAlert;
-
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputDialog;
-import javafx.stage.FileChooser;
 
 public class MainViewControl implements Initializable {
     // 메인 화면 컨트롤러
@@ -129,18 +123,18 @@ public class MainViewControl implements Initializable {
             this.totalWrong += s.getWrongAnswer();
             this.totalSkipped += s.getSkippedAnswer();
             switch (s.getSubject()) {
-            case VOCABULARY:
-                this.vocaScore = s;
-                break;
-            case GRAMMER:
-                this.gramScore = s;
-                break;
-            case READ:
-                this.readScore = s;
-                break;
-            case LISTEN:
-                this.listenScore = s;
-                break;
+                case VOCABULARY:
+                    this.vocaScore = s;
+                    break;
+                case GRAMMER:
+                    this.gramScore = s;
+                    break;
+                case READ:
+                    this.readScore = s;
+                    break;
+                case LISTEN:
+                    this.listenScore = s;
+                    break;
             }
         });
         this.totalSolved = this.totalCorrect + this.totalWrong;

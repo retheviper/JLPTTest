@@ -1,13 +1,9 @@
 package com.jlpt.retheviper.test.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.gui.LoginStage;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -15,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LoginViewContol implements Initializable {
 

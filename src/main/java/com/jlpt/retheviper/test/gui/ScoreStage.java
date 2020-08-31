@@ -1,7 +1,6 @@
 package com.jlpt.retheviper.test.gui;
 
 import com.jlpt.retheviper.test.service.StudentManagementService;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

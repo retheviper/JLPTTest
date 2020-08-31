@@ -1,11 +1,5 @@
 package com.jlpt.retheviper.test.controller;
 
-import java.io.File;
-import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
 import com.jlpt.retheviper.test.bean.Problem;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
@@ -13,25 +7,23 @@ import com.jlpt.retheviper.test.gui.ListenTestStage;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.service.TestManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
-
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class ListenTestViewControl implements Initializable {
     // 청해 시험용 컨트롤러
@@ -91,41 +83,41 @@ public class ListenTestViewControl implements Initializable {
 
     private void startTest() { // 시험 시작
         switch (this.startTestButton.getText()) {
-        case "시작":
-            this.startTestButton.setText("중단");
-            if (this.tList.size() > this.problemNumber) {
-                setProblem(problemNumber);
-                setTimer();
-                startTimerProgress();
-            }
-            break;
-        case "중단":
-            this.startTestButton.setText("시작");
-            final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
-                    "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-            if (result.get().equals(ButtonType.OK)) {
-                StudentManagementService sm = StudentManagementService.getInstance();
-                sm.recordScore(this.score);
-                ListenTestStage.stage.hide();
-            }
-            break;
+            case "시작":
+                this.startTestButton.setText("중단");
+                if (this.tList.size() > this.problemNumber) {
+                    setProblem(problemNumber);
+                    setTimer();
+                    startTimerProgress();
+                }
+                break;
+            case "중단":
+                this.startTestButton.setText("시작");
+                final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
+                        "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
+                if (result.get().equals(ButtonType.OK)) {
+                    StudentManagementService sm = StudentManagementService.getInstance();
+                    sm.recordScore(this.score);
+                    ListenTestStage.stage.hide();
+                }
+                break;
         }
     }
 
     private void setTimer() { // 시험 시간 표시
         switch (timerSetting) {
-        case 0:
-            timer.setText("50분");
-            settedTime = 3000;
-            break;
-        case 1:
-            timer.setText("35분");
-            settedTime = 2100;
-            break;
-        case 2:
-            timer.setText("20분");
-            settedTime = 1200;
-            break;
+            case 0:
+                timer.setText("50분");
+                settedTime = 3000;
+                break;
+            case 1:
+                timer.setText("35분");
+                settedTime = 2100;
+                break;
+            case 2:
+                timer.setText("20분");
+                settedTime = 1200;
+                break;
         }
     }
 

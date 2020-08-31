@@ -1,124 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jlpt.retheviper.test.controller.MainViewControl">
-   <children>
-      <TabPane layoutY="27.0" prefHeight="573.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Welcome">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextArea editable="false" layoutX="15.0" layoutY="61.0" mouseTransparent="true" prefHeight="470.0" prefWidth="778.0" text="이 프로그램은 일본어능력시험(JLPT)의 기출문제를 바탕으로, 학습자가 간편하게 문제를 풀어보고 실제 합격 가능 여부를 가늠할 수 있는 프로그램을 목표로 하여 만들어졌습니다.&#10;&#10;2018년 5월 현재 데이터는 JLPT 공식 홈페이지에서 PDF 파일 형태로 제공하고 있는 N2 기출문제를 담고 있습니다.&#10;&#10;" wrapText="true">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                        </TextArea>
-                        <Label layoutX="15.0" layoutY="5.0" text="환영합니다!">
-                           <font>
-                              <Font size="38.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="87.0" fitWidth="241.0" layoutX="31.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../misc/img/foot_logo01.gif" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="573.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../misc/img/foot_logo02.gif" />
-                           </image>
-                        </ImageView>
-                        <Label layoutX="127.0" layoutY="433.0" text="「Copyright: Japanese-Language Proficiency Test Worldwide Official Website（http://www.jlpt.jp/）」" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="How to use">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <GridPane layoutX="24.0" layoutY="33.0" prefHeight="501.0" prefWidth="765.0">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="107.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="686.0" minWidth="10.0" prefWidth="668.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="◈ 메뉴 설명" />
-                              <Label text="◈ 사용법" GridPane.rowIndex="1" />
-                              <Label text="▶ File : 학습자의 성적 정보를 TXT 파일로 출력할 수 있습니다.&#10;▶ Member: 학습자 등록 및 삭제, 로그인이 가능합니다.&#10;▶ JLPT: 모의고사를 시작하거나 기록된 성적을 확인합니다.&#10;▶ Help: 관리자 모드로 로그인하여 문제 데이터를 관리하거나 프로그램 정보를 볼 수 있습니다." GridPane.columnIndex="1" />
-                              <Label text="▶ 학습자: 학습자 등록을 통해 계정을 만든 뒤, 모의고사를 이용할 수 있습니다.&#10;              학습자 등록은 ID와 비밀번호를 필요로 하며, 입력한 정보는 성적 기록을 위해 활용됩니다.&#10;              또한 학습자는 메뉴를 통해 성적 정보를 열람하거나 TXT 파일로 저장할 수 있습니다.&#10;▶ 관리자: 관리자 로그인을 통해 데이터 관리 모드에 접근하여 문제 데이터베이스를 관리할 수 있습니다.&#10;              데이터 관리 모드에서는 각 과목별로 문제 정보를 입력/수정/삭제할 수 있고,  필요한 경우&#10;              이미지 파일과 MP3 파일을 첨부할 수 있습니다." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="◈ 권리표기" GridPane.rowIndex="3" />
-                              <Label prefHeight="38.0" prefWidth="642.0" text="▶ 본 프로그램에 사용된 JLPT 기출문제의 저작권은 일본 국제교류기금(国際交流基金) 및&#10;    일본국제교육지원협회(日本国際教育支援協会)에 있습니다." GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="◈ 시험과 성적" GridPane.rowIndex="2" />
-                              <Label prefHeight="103.0" prefWidth="548.0" text="▶ 시험은 언어지식(문자·어휘), 언어지식(문법), 독해, 청해의 네 과목으로 이루어져 있습니다.&#10;▶ 각 과목에서 별도의 이미지를 참고해야 할 경우 팝업으로 이미지가 제시됩니다.&#10;▶ 청해 과목의 경우 음성을 청취하며 진행할 수 있습니다.&#10;▶ 과목당 성적은 개별 기록되며, 종합 성적은 전 과목의 성적을 기반으로 등급이 매겨집니다.&#10;▶ 등급은 A부터 F까지 존재하며, B등급 이상(평균 60점)일 경우 합격을 기대할 수 있지만&#10;    실제 시험에서는 과목당 낙제점이 존재하기 때문에 절대적인 지표로 삼는 것은 지양해 주십시오." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-      <MenuBar layoutY="2.0" prefHeight="21.0" prefWidth="800.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem fx:id="print_m" mnemonicParsing="false" text="학습 결과 출력" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="exit_m" mnemonicParsing="false" text="종료" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Member">
-            <items>
-                  <Menu mnemonicParsing="false" text="학습자 관리">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jlpt.retheviper.test.controller.MainViewControl">
+    <children>
+        <TabPane layoutY="27.0" prefHeight="573.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Welcome">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextArea editable="false" layoutX="15.0" layoutY="61.0" mouseTransparent="true"
+                                          prefHeight="470.0" prefWidth="778.0"
+                                          text="이 프로그램은 일본어능력시험(JLPT)의 기출문제를 바탕으로, 학습자가 간편하게 문제를 풀어보고 실제 합격 가능 여부를 가늠할 수 있는 프로그램을 목표로 하여 만들어졌습니다.&#10;&#10;2018년 5월 현재 데이터는 JLPT 공식 홈페이지에서 PDF 파일 형태로 제공하고 있는 N2 기출문제를 담고 있습니다.&#10;&#10;"
+                                          wrapText="true">
+                                    <font>
+                                        <Font size="27.0"/>
+                                    </font>
+                                </TextArea>
+                                <Label layoutX="15.0" layoutY="5.0" text="환영합니다!">
+                                    <font>
+                                        <Font size="38.0"/>
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="87.0" fitWidth="241.0" layoutX="31.0" layoutY="460.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../../../../../misc/img/foot_logo01.gif"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="573.0" layoutY="460.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../../../../../misc/img/foot_logo02.gif"/>
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="127.0" layoutY="433.0"
+                                       text="「Copyright: Japanese-Language Proficiency Test Worldwide Official Website（http://www.jlpt.jp/）」"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="How to use">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <GridPane layoutX="24.0" layoutY="33.0" prefHeight="501.0" prefWidth="765.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="380.0"
+                                                           minWidth="10.0" prefWidth="107.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="686.0" minWidth="10.0"
+                                                           prefWidth="668.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP"
+                                                        vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP"
+                                                        vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP"
+                                                        vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP"
+                                                        vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="◈ 메뉴 설명"/>
+                                        <Label text="◈ 사용법" GridPane.rowIndex="1"/>
+                                        <Label text="▶ File : 학습자의 성적 정보를 TXT 파일로 출력할 수 있습니다.&#10;▶ Member: 학습자 등록 및 삭제, 로그인이 가능합니다.&#10;▶ JLPT: 모의고사를 시작하거나 기록된 성적을 확인합니다.&#10;▶ Help: 관리자 모드로 로그인하여 문제 데이터를 관리하거나 프로그램 정보를 볼 수 있습니다."
+                                               GridPane.columnIndex="1"/>
+                                        <Label text="▶ 학습자: 학습자 등록을 통해 계정을 만든 뒤, 모의고사를 이용할 수 있습니다.&#10;              학습자 등록은 ID와 비밀번호를 필요로 하며, 입력한 정보는 성적 기록을 위해 활용됩니다.&#10;              또한 학습자는 메뉴를 통해 성적 정보를 열람하거나 TXT 파일로 저장할 수 있습니다.&#10;▶ 관리자: 관리자 로그인을 통해 데이터 관리 모드에 접근하여 문제 데이터베이스를 관리할 수 있습니다.&#10;              데이터 관리 모드에서는 각 과목별로 문제 정보를 입력/수정/삭제할 수 있고,  필요한 경우&#10;              이미지 파일과 MP3 파일을 첨부할 수 있습니다."
+                                               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <Label text="◈ 권리표기" GridPane.rowIndex="3"/>
+                                        <Label prefHeight="38.0" prefWidth="642.0"
+                                               text="▶ 본 프로그램에 사용된 JLPT 기출문제의 저작권은 일본 국제교류기금(国際交流基金) 및&#10;    일본국제교육지원협회(日本国際教育支援協会)에 있습니다."
+                                               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        <Label text="◈ 시험과 성적" GridPane.rowIndex="2"/>
+                                        <Label prefHeight="103.0" prefWidth="548.0"
+                                               text="▶ 시험은 언어지식(문자·어휘), 언어지식(문법), 독해, 청해의 네 과목으로 이루어져 있습니다.&#10;▶ 각 과목에서 별도의 이미지를 참고해야 할 경우 팝업으로 이미지가 제시됩니다.&#10;▶ 청해 과목의 경우 음성을 청취하며 진행할 수 있습니다.&#10;▶ 과목당 성적은 개별 기록되며, 종합 성적은 전 과목의 성적을 기반으로 등급이 매겨집니다.&#10;▶ 등급은 A부터 F까지 존재하며, B등급 이상(평균 60점)일 경우 합격을 기대할 수 있지만&#10;    실제 시험에서는 과목당 낙제점이 존재하기 때문에 절대적인 지표로 삼는 것은 지양해 주십시오."
+                                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <MenuBar layoutY="2.0" prefHeight="21.0" prefWidth="800.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
                     <items>
-                      <MenuItem fx:id="registStudent_m" mnemonicParsing="false" text="학습자 등록" />
-                        <MenuItem fx:id="removeStudent_m" mnemonicParsing="false" text="학습자 삭제" />
+                        <MenuItem fx:id="print_m" mnemonicParsing="false" text="학습 결과 출력"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem fx:id="exit_m" mnemonicParsing="false" text="종료"/>
                     </items>
-                  </Menu>
-              <MenuItem fx:id="loginStudent_m" mnemonicParsing="false" text="로그인 / 로그아웃" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="JLPT">
-              <items>
-                <MenuItem fx:id="startTest_m" mnemonicParsing="false" text="시험 시작" />
-                  <MenuItem fx:id="viewScore_m" mnemonicParsing="false" text="성적 확인" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-                  <Menu mnemonicParsing="false" text="관리자">
+                </Menu>
+                <Menu mnemonicParsing="false" text="Member">
                     <items>
-                      <MenuItem fx:id="admin_m" mnemonicParsing="false" text="관리자 로그인" />
-                        <MenuItem fx:id="dataManagement_m" mnemonicParsing="false" text="데이터 관리" />
+                        <Menu mnemonicParsing="false" text="학습자 관리">
+                            <items>
+                                <MenuItem fx:id="registStudent_m" mnemonicParsing="false" text="학습자 등록"/>
+                                <MenuItem fx:id="removeStudent_m" mnemonicParsing="false" text="학습자 삭제"/>
+                            </items>
+                        </Menu>
+                        <MenuItem fx:id="loginStudent_m" mnemonicParsing="false" text="로그인 / 로그아웃"/>
                     </items>
-                  </Menu>
-              <MenuItem fx:id="programInfo_m" mnemonicParsing="false" text="프로그램 정보" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </children>
+                </Menu>
+                <Menu mnemonicParsing="false" text="JLPT">
+                    <items>
+                        <MenuItem fx:id="startTest_m" mnemonicParsing="false" text="시험 시작"/>
+                        <MenuItem fx:id="viewScore_m" mnemonicParsing="false" text="성적 확인"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <Menu mnemonicParsing="false" text="관리자">
+                            <items>
+                                <MenuItem fx:id="admin_m" mnemonicParsing="false" text="관리자 로그인"/>
+                                <MenuItem fx:id="dataManagement_m" mnemonicParsing="false" text="데이터 관리"/>
+                            </items>
+                        </Menu>
+                        <MenuItem fx:id="programInfo_m" mnemonicParsing="false" text="프로그램 정보"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
 </AnchorPane>

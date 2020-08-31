@@ -1,17 +1,16 @@
 package com.jlpt.retheviper.test.controller;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.util.Calculater;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ScoreViewControl implements Initializable {
 

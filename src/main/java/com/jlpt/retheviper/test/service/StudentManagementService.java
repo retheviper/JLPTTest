@@ -1,10 +1,14 @@
 package com.jlpt.retheviper.test.service;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.jlpt.retheviper.test.bean.Score;
+import com.jlpt.retheviper.test.bean.Student;
+import com.jlpt.retheviper.test.constant.Subject;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,15 +16,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.jlpt.retheviper.test.bean.Score;
-import com.jlpt.retheviper.test.bean.Student;
-import com.jlpt.retheviper.test.constant.Subject;
-
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StudentManagementService {
@@ -48,8 +43,7 @@ public class StudentManagementService {
         if (Files.exists(PATH)) {
             try (final ObjectInputStream stream = new ObjectInputStream(
                     new BufferedInputStream(Files.newInputStream(PATH)))) {
-                @SuppressWarnings("unchecked")
-                final Map<String, Student> loadedData = (HashMap<String, Student>) stream.readObject();
+                @SuppressWarnings("unchecked") final Map<String, Student> loadedData = (HashMap<String, Student>) stream.readObject();
                 loadedData.forEach(STUDENT_DATA::put);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

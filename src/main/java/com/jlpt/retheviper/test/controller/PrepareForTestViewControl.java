@@ -1,8 +1,5 @@
 package com.jlpt.retheviper.test.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.constant.Subject;
 import com.jlpt.retheviper.test.gui.ElseTestStage;
@@ -10,7 +7,6 @@ import com.jlpt.retheviper.test.gui.ListenTestStage;
 import com.jlpt.retheviper.test.gui.PrepareForTestStage;
 import com.jlpt.retheviper.test.service.TestManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PrepareForTestViewControl implements Initializable {
     // 시험 설정용 창 컨트롤러
@@ -54,15 +53,15 @@ public class PrepareForTestViewControl implements Initializable {
                 return;
             }
             switch (subject) { // 과목 선택에 따른 분기
-            case LISTEN:
-                ListenTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                new ListenTestStage();
-                break;
-            default:
-                ElseTestViewControl.setSubject(subject);
-                ElseTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                new ElseTestStage();
-                break;
+                case LISTEN:
+                    ListenTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
+                    new ListenTestStage();
+                    break;
+                default:
+                    ElseTestViewControl.setSubject(subject);
+                    ElseTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
+                    new ElseTestStage();
+                    break;
             }
             PrepareForTestStage.stage.hide();
             Main.getPrimaryStage().setIconified(true);

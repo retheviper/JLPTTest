@@ -1,12 +1,12 @@
 package com.jlpt.retheviper.test.util;
 
-import java.util.Optional;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateAlert {
@@ -16,7 +16,7 @@ public class CreateAlert {
     }
 
     public static Optional<ButtonType> withHeader(final AlertType type, final String title, final String header,
-            final String content) {
+                                                  final String content) {
         final Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(header);

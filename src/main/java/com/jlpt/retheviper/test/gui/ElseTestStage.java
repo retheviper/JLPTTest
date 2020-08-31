@@ -2,7 +2,6 @@ package com.jlpt.retheviper.test.gui;
 
 import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.controller.ElseTestViewControl;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
