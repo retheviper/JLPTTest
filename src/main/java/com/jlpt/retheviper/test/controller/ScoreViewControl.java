@@ -3,7 +3,7 @@ package com.jlpt.retheviper.test.controller;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
 import com.jlpt.retheviper.test.service.StudentManagementService;
-import com.jlpt.retheviper.test.util.Calculater;
+import com.jlpt.retheviper.test.util.Calculator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -96,6 +96,6 @@ public class ScoreViewControl implements Initializable {
         totalWrongLabel.setText(totalWrong + " 개");
         totalSolvedLabel.setText(totalSolved + " 문제");
 
-        totalGradeLabel.setText(Calculater.calculateGrade(totalCorrect, totalSolved));
+        totalGradeLabel.setText(Calculator.calculateGrade(totalCorrect, totalSolved));
     }
 }

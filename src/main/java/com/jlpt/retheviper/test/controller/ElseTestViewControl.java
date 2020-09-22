@@ -1,6 +1,5 @@
 package com.jlpt.retheviper.test.controller;
 
-import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.bean.Problem;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
@@ -55,7 +54,7 @@ public class ElseTestViewControl implements Initializable {
     private int correctAnswer = 0; // 정답 기록용
     private int wrongAnswer = 0; // 오답 기록용
     private int skippedAnswer = 0; // 넘긴 문제 기록용
-    private int settedTime = 0; // 설정된 시험 시간
+    private int setTime = 0; // 설정된 시험 시간
 
     private void startTest() { // 시험 시작
         switch (this.startTestButton.getText()) {
@@ -76,22 +75,21 @@ public class ElseTestViewControl implements Initializable {
                 result.ifPresent(this::exiting);
                 break;
         }
-
     }
 
     private void setTimer() { // 시험 시간 표시
         switch (timerSetting) {
             case 0:
                 this.timer.setText("55분");
-                this.settedTime = 3300;
+                this.setTime = 3300;
                 break;
             case 1:
                 this.timer.setText("40분");
-                this.settedTime = 2400;
+                this.setTime = 2400;
                 break;
             case 2:
                 this.timer.setText("25분");
-                this.settedTime = 1500;
+                this.setTime = 1500;
                 break;
         }
     }
@@ -101,8 +99,8 @@ public class ElseTestViewControl implements Initializable {
         final Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                for (int i = 0; i <= settedTime; i++) {
-                    updateProgress(i, settedTime);
+                for (int i = 0; i <= setTime; i++) {
+                    updateProgress(i, setTime);
                     try {
                         Thread.sleep(1000);
                     } catch (Exception ignored) {

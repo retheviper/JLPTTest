@@ -14,7 +14,7 @@ import java.io.IOException;
 public class StageManager {
 
     public static Stage create(final String view, final String title) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(StageManager.class.getResource(view));
         final Parent root = loader.load();
         final Stage stage = new Stage();

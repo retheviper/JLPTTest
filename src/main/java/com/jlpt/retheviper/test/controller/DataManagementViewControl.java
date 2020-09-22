@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -30,8 +31,6 @@ public class DataManagementViewControl implements Initializable {
     private final ObservableList<String> answers = FXCollections.observableArrayList("1번", "2번", "3번", "4번"); // 정답 목록
     private final TestManagementService service = TestManagementService.getInstance();
     private FileChooser fileChooser;
-    private String imgSource = null; // 이미지 파일 이름
-    private String mp3Source = null; // mp3 파일 이름
     private File imgFile; // 이미지 파일 처리용
     private File mp3File; // mp3 파일 처리용
     @FXML
@@ -70,52 +69,56 @@ public class DataManagementViewControl implements Initializable {
         this.table_left.setItems(this.problemList);
     }
 
-    private void showProblemDetails(final Number newValue) { // 테이블 항목 선택 시 입력창에 반영
-        if (this.table_left.getSelectionModel().getSelectedIndex() != -1) {
-            if (this.subject_right.getSelectionModel().getSelectedItem() != this.subject_left.getSelectionModel()
-                    .getSelectedItem()) {
+    private void showProblemDetails() { // 테이블 항목 선택 시 입력창에 반영
+        final SelectionModel<Problem> model = this.table_left.getSelectionModel();
+        if (model.getSelectedIndex() != -1) {
+            final Problem problem = model.getSelectedItem();
+            if (!Objects.equals(this.subject_right.getSelectionModel().getSelectedItem(), this.subject_left.getSelectionModel()
+                    .getSelectedItem())) {
                 this.subject_right.getSelectionModel()
-                        .select(this.table_left.getSelectionModel().getSelectedItem().getSubject().getValue());
+                        .select(problem.getSubject().getValue());
             }
-            this.number_right.setText(this.table_left.getSelectionModel().getSelectedItem().getPNumber());
-            this.subNumber_right.setText(this.table_left.getSelectionModel().getSelectedItem().getSubNumber());
-            this.passage_right.setText(this.table_left.getSelectionModel().getSelectedItem().getPassage());
-            this.firstChoice_right.setText(this.table_left.getSelectionModel().getSelectedItem().getFirstChoice());
-            this.secondChoice_right.setText(this.table_left.getSelectionModel().getSelectedItem().getSecondChoice());
-            this.thirdChoice_right.setText(this.table_left.getSelectionModel().getSelectedItem().getThirdChoice());
-            this.forthChoice_right.setText(this.table_left.getSelectionModel().getSelectedItem().getForthChoice());
+            this.number_right.setText(problem.getPNumber());
+            this.subNumber_right.setText(problem.getSubNumber());
+            this.passage_right.setText(problem.getPassage());
+            this.firstChoice_right.setText(problem.getFirstChoice());
+            this.secondChoice_right.setText(problem.getSecondChoice());
+            this.thirdChoice_right.setText(problem.getThirdChoice());
+            this.forthChoice_right.setText(problem.getForthChoice());
             this.answer_right.getSelectionModel()
-                    .select(this.table_left.getSelectionModel().getSelectedItem().getAnswer() - 1);
+                    .select(problem.getAnswer() - 1);
 
-            if (this.table_left.getSelectionModel().getSelectedItem().getImgSource() != null
-                    && !this.table_left.getSelectionModel().getSelectedItem().getImgSource().equals("nah")) { // 이미지 파일이 있을 경우 파일 첨부
+            if (problem.getImgSource() != null
+                    && !problem.getImgSource().equals("nah")) { // 이미지 파일이 있을 경우 파일 첨부
                 // 버튼에 반영
                 this.imgIncluded_check.setSelected(true);
                 this.chooseImgSourceButton.setDisable(false);
-                this.chooseImgSourceButton.setText(table_left.getSelectionModel().getSelectedItem().getImgSource());
-                this.imgFile = new File(table_left.getSelectionModel().getSelectedItem().getImgSource());
+                this.chooseImgSourceButton.setText(problem.getImgSource());
+                this.imgFile = new File(problem.getImgSource());
             } else {
                 this.imgIncluded_check.setSelected(false);
                 this.chooseImgSourceButton.setDisable(true);
                 this.chooseImgSourceButton.setText("이미지 소스 선택");
             }
 
-            if (this.table_left.getSelectionModel().getSelectedItem().getSubject().equals(Subject.LISTEN)) { // 청해의 경우 mp3를 첨부 버튼에 반영
-                final Problem listen = this.table_left.getSelectionModel().getSelectedItem();
-                if (listen.getMp3Source() != null) {
+            if (problem.getSubject().equals(Subject.LISTEN)) { // 청해의 경우 mp3를 첨부 버튼에 반영
+                if (problem.getMp3Source() != null) {
                     chooseMp3Button.setDisable(false);
-                    chooseMp3Button.setText(listen.getMp3Source());
-                    this.mp3File = new File(listen.getMp3Source());
+                    chooseMp3Button.setText(problem.getMp3Source());
+                    this.mp3File = new File(problem.getMp3Source());
                 } else {
-                    chooseMp3Button.setDisable(true);
-                    chooseMp3Button.setText("MP3 소스 선택");
+                    chooseMp3();
                 }
             } else {
-                chooseMp3Button.setDisable(true);
-                chooseMp3Button.setText("MP3 소스 선택");
+                chooseMp3();
                 this.mp3File = new File("");
             }
         }
+    }
+
+    private void chooseMp3() {
+        chooseMp3Button.setDisable(true);
+        chooseMp3Button.setText("MP3 소스 선택");
     }
 
     private void clearInputForm() { // 입력창 초기화
@@ -146,11 +149,10 @@ public class DataManagementViewControl implements Initializable {
     private void registerProblem() { // 문제 등록
         if (checkForm()) {
             checkAudioIncluded();
+            refreshBothTable();
             if (this.service.registerProblem(getInputtedProblem())) {
-                refreshBothTable();
                 CreateAlert.withoutHeader(AlertType.INFORMATION, "성공", "문제가 정상적으로 등록되었습니다");
             } else {
-                refreshBothTable();
                 CreateAlert.withoutHeader(AlertType.ERROR, "오류", "문제 번호가 중복되었습니다");
             }
         }
@@ -201,11 +203,12 @@ public class DataManagementViewControl implements Initializable {
     }
 
     private Problem getInputtedProblem() {
-        final ProblemBuilder builder = Problem.builder().subject(Subject.getTypeByValues(this.subject_right.getValue()))
+        final ProblemBuilder builder = Problem.builder()
+                .subject(Subject.getTypeByValues(this.subject_right.getValue()))
                 .pNumber(this.number_right.getText())
                 .subNumber(this.subNumber_right.getText())
                 .passage(this.passage_right.getText())
-                .imgSource(this.imgSource)
+                .imgSource(this.imgFile.getName())
                 .firstChoice(this.firstChoice_right.getText())
                 .secondChoice(this.secondChoice_right.getText())
                 .thirdChoice(this.thirdChoice_right.getText())
@@ -241,11 +244,11 @@ public class DataManagementViewControl implements Initializable {
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle("이미지 소스 파일 선택");
         this.fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg", "*.jpeg"), new FileChooser.ExtensionFilter("PNG", "*.png"),
                 new FileChooser.ExtensionFilter("GIF", "*.gif"));
         if ((this.imgFile = this.fileChooser.showOpenDialog(DataManagementStage.getStage())) != null) {
-            this.imgSource = this.imgFile.getName();
-            this.chooseImgSourceButton.setText(this.imgSource);
+            // 이미지 파일 이름
+            this.chooseImgSourceButton.setText(this.imgFile.getName());
             this.service.copyFile(this.imgFile);
         }
     }
@@ -255,8 +258,8 @@ public class DataManagementViewControl implements Initializable {
         this.fileChooser.setTitle("mp3 소스 파일 선택");
         this.fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
         if ((this.mp3File = this.fileChooser.showOpenDialog(DataManagementStage.getStage())) != null) {
-            this.mp3Source = this.mp3File.getName();
-            this.chooseMp3Button.setText(this.mp3Source);
+            // mp3 파일 이름
+            this.chooseMp3Button.setText(this.mp3File.getName());
             this.service.copyFile(this.mp3File);
         }
     }
@@ -267,7 +270,7 @@ public class DataManagementViewControl implements Initializable {
         this.subject_right.setItems(this.subjects);
         this.answer_right.setItems(this.answers);
         this.table_left.getSelectionModel().selectedIndexProperty()
-                .addListener((problem, oldValue, newValue) -> showProblemDetails(newValue));
+                .addListener((problem, oldValue, newValue) -> showProblemDetails());
         this.subject_right.setOnAction(event -> toListenTest());
         this.subject_left.setOnAction(event -> setRightTableValue());
         this.imgIncluded_check.setOnAction(event -> setChooseImgSourceButton());

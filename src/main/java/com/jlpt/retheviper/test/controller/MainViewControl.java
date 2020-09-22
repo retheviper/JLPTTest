@@ -4,7 +4,7 @@ import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.gui.*;
 import com.jlpt.retheviper.test.service.StudentManagementService;
-import com.jlpt.retheviper.test.util.Calculater;
+import com.jlpt.retheviper.test.util.Calculator;
 import com.jlpt.retheviper.test.util.CreateAlert;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -136,7 +136,7 @@ public class MainViewControl implements Initializable {
             }
         });
         this.totalSolved = this.totalCorrect + this.totalWrong;
-        this.grade = Calculater.calculateGrade(this.totalCorrect, this.totalSolved);
+        this.grade = Calculator.calculateGrade(this.totalCorrect, this.totalSolved);
     }
 
     private void saveFile(final String content, final File file) { // TXT 기록용
@@ -163,7 +163,7 @@ public class MainViewControl implements Initializable {
         if (this.service.isLogin()) {
             CreateAlert.withoutHeader(AlertType.ERROR, "오류", "먼저 로그아웃 해 주십시오");
         } else {
-            needLogin();
+            RegisterStudentStage.createStage();
         }
     }
 
