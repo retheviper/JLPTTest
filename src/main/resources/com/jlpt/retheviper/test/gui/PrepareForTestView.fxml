@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="206.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="206.0" prefWidth="340.0"
+            xmlns="http://javafx.com/javafx/8.0.141"
             fx:controller="com.jlpt.retheviper.test.controller.PrepareForTestViewControl">
     <children>
         <GridPane layoutX="17.0" layoutY="52.0" prefHeight="99.0" prefWidth="325.0">

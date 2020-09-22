@@ -29,51 +29,33 @@ import java.util.ResourceBundle;
 public class ElseTestViewControl implements Initializable {
     // 청해 제외 3과목 시험용 컨트롤러
 
-    @FXML
-    private final ToggleGroup group = new ToggleGroup();
-
-    @FXML
-    private RadioButton firstChoice_radio, secondChoice_radio, thirdChoice_radio, forthChoice_radio;
-
-    @FXML
-    private TextArea passageArea;
-
-    @FXML
-    private Button startTestButton, previousProblemButton, nextProblemButton, submitAnswerButton, Mp3PlayButton;
-
-    @FXML
-    private Label problemNumberLabel, mp3CurrentTime, mp3Length, totalProblemLabel, correctAnswerLabel,
-            wrongAnswerLabel, skippedAnswerLabel, timer;
-
-    @FXML
-    private ProgressBar timeProgress;
-
-    private int problemNumber = 0;
-
-    private int selectedAnswer = 0;
-
-    private TestManagementService service = TestManagementService.getInstance();
-
-    private String imageFileName = ""; // 이미지 파일 이름
-
+    public static int timerSetting = 0; // 시험 시간 세팅
     @Getter
     @Setter
     private static Subject subject; // 과목 이름
-
-    private Score score = Score.builder().build();
-
+    @FXML
+    private final ToggleGroup group = new ToggleGroup();
+    @FXML
+    private RadioButton firstChoice_radio, secondChoice_radio, thirdChoice_radio, forthChoice_radio;
+    @FXML
+    private TextArea passageArea;
+    @FXML
+    private Button startTestButton, previousProblemButton, nextProblemButton, submitAnswerButton, Mp3PlayButton;
+    @FXML
+    private Label problemNumberLabel, mp3CurrentTime, mp3Length, totalProblemLabel, correctAnswerLabel,
+            wrongAnswerLabel, skippedAnswerLabel, timer;
+    @FXML
+    private ProgressBar timeProgress;
+    private int problemNumber = 0;
+    private int selectedAnswer = 0;
+    private final TestManagementService service = TestManagementService.getInstance();
+    private String imageFileName = ""; // 이미지 파일 이름
+    private final Score score = Score.builder().build();
     private List<Problem> tList; // 임시로 담을 리스트
-
     private int correctAnswer = 0; // 정답 기록용
-
     private int wrongAnswer = 0; // 오답 기록용
-
     private int skippedAnswer = 0; // 넘긴 문제 기록용
-
     private int settedTime = 0; // 설정된 시험 시간
-
-    public static int timerSetting = 0; // 시험 시간 세팅
-
     private Task<Void> task; // 시험 시간 측정용
 
     private Thread thread; // task 설정
@@ -97,7 +79,7 @@ public class ElseTestViewControl implements Initializable {
                 if (result.get() == ButtonType.OK) {
                     final StudentManagementService sm = StudentManagementService.getInstance();
                     sm.recordScore(score);
-                    ListenTestStage.stage.hide();
+                    ListenTestStage.getStage().hide();
                 }
                 break;
         }
@@ -129,8 +111,7 @@ public class ElseTestViewControl implements Initializable {
                     updateProgress(i, settedTime);
                     try {
                         Thread.sleep(1000);
-                    } catch (Exception e) {
-
+                    } catch (Exception ignored) {
                     }
                 }
                 return null;

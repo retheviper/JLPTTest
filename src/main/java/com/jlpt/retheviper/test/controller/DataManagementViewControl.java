@@ -23,45 +23,34 @@ import java.util.regex.Pattern;
 public class DataManagementViewControl implements Initializable {
     // 데이터 관리 창 컨트롤러
 
+    @FXML
+    private final ObservableList<String> subjects = FXCollections.observableArrayList(Subject.VOCABULARY.getValue(),
+            Subject.GRAMMER.getValue(), Subject.READ.getValue(), Subject.LISTEN.getValue()); // 과목
+    @FXML
+    private final ObservableList<String> answers = FXCollections.observableArrayList("1번", "2번", "3번", "4번"); // 정답 목록
+    private final TestManagementService service = TestManagementService.getInstance();
     private FileChooser fileChooser;
     private String imgSource = null; // 이미지 파일 이름
     private String mp3Source = null; // mp3 파일 이름
     private File imgFile; // 이미지 파일 처리용
     private File mp3File; // mp3 파일 처리용
-
     @FXML
     private ComboBox<String> subject_left, subject_right, answer_right;
-
     @FXML
     private CheckBox imgIncluded_check;
-
     @FXML
     private Button chooseImgSourceButton, chooseMp3Button, registButton, modifyButton, removeButton, endButton;
-
     @FXML
     private TextField number_right, subNumber_right, firstChoice_right, secondChoice_right, thirdChoice_right,
             forthChoice_right;
-
     @FXML
     private TextArea passage_right;
-
     @FXML
     private TableView<Problem> table_left;
-
     @FXML
     private TableColumn<Problem, String> number_left, subNumber_left, passage_left;
-
-    @FXML
-    private ObservableList<String> subjects = FXCollections.observableArrayList(Subject.VOCABULARY.getValue(),
-            Subject.GRAMMER.getValue(), Subject.READ.getValue(), Subject.LISTEN.getValue()); // 과목
-
-    @FXML
-    private ObservableList<String> answers = FXCollections.observableArrayList("1번", "2번", "3번", "4번"); // 정답 목록
-
     @FXML
     private ObservableList<Problem> problemList; // 테이블에 담을 임시 문제 목록
-
-    private TestManagementService service = TestManagementService.getInstance();
 
     private void setRightTableValue() { // 왼쪽 과목 콤보박스 선택시 테이블 변화
         final Subject subject = Subject.getTypeByValues(this.subject_left.getValue());
@@ -154,7 +143,7 @@ public class DataManagementViewControl implements Initializable {
         }
     }
 
-    private void registProblem() { // 문제 등록
+    private void registerProblem() { // 문제 등록
         if (checkForm()) {
             checkAudioIncluded();
             if (this.service.registProblem(getInputedProblem())) {
@@ -192,7 +181,7 @@ public class DataManagementViewControl implements Initializable {
     }
 
     private int convertAnswerToInt(final String answer) {
-        return Integer.valueOf(answer.substring(0, answer.length() - 1));
+        return Integer.parseInt(answer.substring(0, answer.length() - 1));
     }
 
     private void modifyProblem() { // 수정 버튼 클릭 시 테이블에서 대상을 선택하고 내용을 덮어씀
@@ -254,7 +243,7 @@ public class DataManagementViewControl implements Initializable {
         this.fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"),
                 new FileChooser.ExtensionFilter("GIF", "*.gif"));
-        if ((this.imgFile = this.fileChooser.showOpenDialog(DataManagementStage.stage)) != null) {
+        if ((this.imgFile = this.fileChooser.showOpenDialog(DataManagementStage.getStage())) != null) {
             this.imgSource = this.imgFile.getName();
             this.chooseImgSourceButton.setText(this.imgSource);
             this.service.copyFile(this.imgFile);
@@ -265,7 +254,7 @@ public class DataManagementViewControl implements Initializable {
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle("mp3 소스 파일 선택");
         this.fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
-        if ((this.mp3File = this.fileChooser.showOpenDialog(DataManagementStage.stage)) != null) {
+        if ((this.mp3File = this.fileChooser.showOpenDialog(DataManagementStage.getStage())) != null) {
             this.mp3Source = this.mp3File.getName();
             this.chooseMp3Button.setText(this.mp3Source);
             this.service.copyFile(this.mp3File);
@@ -284,10 +273,10 @@ public class DataManagementViewControl implements Initializable {
         this.imgIncluded_check.setOnAction(event -> setChooseImgSourceButton());
         this.chooseImgSourceButton.setOnAction(event -> chooseImageFile());
         this.chooseMp3Button.setOnAction(event -> chooseMp3File());
-        this.registButton.setOnAction(event -> registProblem());
+        this.registButton.setOnAction(event -> registerProblem());
         this.modifyButton.setOnAction(event -> modifyProblem());
         this.removeButton.setOnAction(event -> removeProblem());
-        this.endButton.setOnAction(event -> DataManagementStage.stage.hide());
+        this.endButton.setOnAction(event -> DataManagementStage.getStage().hide());
     }
 
 }

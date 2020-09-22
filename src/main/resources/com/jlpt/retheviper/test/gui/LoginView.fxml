@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0"
-      prefWidth="248.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="102.0" prefWidth="248.0" xmlns="http://javafx.com/javafx/8.0.141"
       fx:controller="com.jlpt.retheviper.test.controller.LoginViewContol">
     <children>
         <GridPane layoutX="8.0" layoutY="5.0" prefHeight="88.0" prefWidth="231.0">

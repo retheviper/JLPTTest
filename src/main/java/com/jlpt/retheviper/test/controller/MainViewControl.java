@@ -30,7 +30,7 @@ public class MainViewControl implements Initializable {
     private MenuItem print_m, exit_m, registStudent_m, removeStudent_m, startTest_m, viewScore_m, admin_m,
             dataManagement_m, programInfo_m, loginStudent_m;
 
-    private StudentManagementService service = StudentManagementService.getInstance();
+    private final StudentManagementService service = StudentManagementService.getInstance();
 
     private Score vocaScore;
 

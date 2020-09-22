@@ -28,58 +28,45 @@ import java.util.ResourceBundle;
 public class ListenTestViewControl implements Initializable {
     // 청해 시험용 컨트롤러
 
+    public static MediaPlayer mediaPlayer; // mp3 플레이어
+    public static int timerSetting = 0; // 시험 시간 세팅
     @FXML
     private final ToggleGroup group = new ToggleGroup();
-
+    private final TestManagementService service = TestManagementService.getInstance();
+    private final List<Problem> tList = service.getProblem(Subject.LISTEN);
     @FXML
     private RadioButton firstChoice_radio, secondChoice_radio, thirdChoice_radio, forthChoice_radio;
-
     @FXML
     private TextArea passageArea;
-
     @FXML
     private Button startTestButton, previousProblemButton, nextProblemButton, submitAnswerButton, Mp3PlayButton;
-
     @FXML
     private Label problemNumberLabel, mp3CurrentTime, mp3Length, totalProblemLabel, correctAnswerLabel,
             wrongAnswerLabel, skippedAnswerLabel, timer;
-
     @FXML
     private ProgressBar timeProgress, mp3Progress;
-
     private int problemNumber = 0;
-
     private int selectedAnswer = 0;
-
-    private final TestManagementService service = TestManagementService.getInstance();
-
-    private final List<Problem> tList = service.getProblem(Subject.LISTEN);
-
     private String theImg = ""; // 이미지 파일 이름
-
     private String theMp3 = ""; // mp3 파일 이름
-
     private Media media; // mp3에 담을 미디어
-
-    public static MediaPlayer mediaPlayer; // mp3 플레이어
-
-    private Score score = Score.builder().subject(Subject.LISTEN).build(); // 임시로 담을 성적
-
+    private final Score score = Score.builder().subject(Subject.LISTEN).build(); // 임시로 담을 성적
     private int correctAnswer = 0; // 정답 기록용
-
     private int wrongAnswer = 0; // 오답 기록용
-
     private int skippedAnswer = 0; // 넘긴 문제 기록용
-
     private int settedTime = 0; // 설정된 시험 시간
-
     private boolean getStarted = false; // MP3 세팅 확인용
-
-    public static int timerSetting = 0; // 시험 시간 세팅
-
     private Task<Void> task; // 시험 시간 측정용
 
     private Thread thread; // task 설정
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+        ListenTestViewControl.mediaPlayer = mediaPlayer;
+    }
 
     private void startTest() { // 시험 시작
         switch (this.startTestButton.getText()) {
@@ -98,7 +85,7 @@ public class ListenTestViewControl implements Initializable {
                 if (result.get().equals(ButtonType.OK)) {
                     StudentManagementService sm = StudentManagementService.getInstance();
                     sm.recordScore(this.score);
-                    ListenTestStage.stage.hide();
+                    ListenTestStage.getStage().hide();
                 }
                 break;
         }
@@ -254,7 +241,7 @@ public class ListenTestViewControl implements Initializable {
             if (result.get().equals(ButtonType.OK)) {
                 final StudentManagementService sm = StudentManagementService.getInstance();
                 sm.recordScore(score);
-                ListenTestStage.stage.hide();
+                ListenTestStage.getStage().hide();
             }
         }
     }
@@ -325,13 +312,5 @@ public class ListenTestViewControl implements Initializable {
         this.nextProblemButton.setOnAction(event -> goNext());
         this.Mp3PlayButton.setOnAction(event -> playMp3());
 
-    }
-
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
-    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
-        ListenTestViewControl.mediaPlayer = mediaPlayer;
     }
 }

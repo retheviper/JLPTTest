@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class RegistStudentViewControl implements Initializable {
 
-    private StudentManagementService service = StudentManagementService.getInstance();
+    private final StudentManagementService service = StudentManagementService.getInstance();
 
     @FXML
     private Button registButton;
@@ -39,7 +39,7 @@ public class RegistStudentViewControl implements Initializable {
                 doRegistCheck();
             }
         });
-        this.cancelButton.setOnAction(event -> RegistStudentStage.stage.hide());
+        this.cancelButton.setOnAction(event -> RegistStudentStage.getStage().hide());
     }
 
     @FXML
@@ -47,7 +47,7 @@ public class RegistStudentViewControl implements Initializable {
         if (this.service
                 .registStudent(Student.builder().id(idField.getText()).password(passwordField.getText()).build())) {
             CreateAlert.withoutHeader(AlertType.INFORMATION, "알림", "정상적으로 등록되었습니다");
-            RegistStudentStage.stage.hide();
+            RegistStudentStage.getStage().hide();
         } else {
             CreateAlert.withoutHeader(AlertType.ERROR, "알림", "입력한 ID로는 등록할 수 없습니다");
         }

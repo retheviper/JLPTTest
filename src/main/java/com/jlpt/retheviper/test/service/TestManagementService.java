@@ -43,6 +43,23 @@ public class TestManagementService {
         PROBLEMS.forEach((k, v) -> loadDataFromFile(k));
     }
 
+    @SuppressWarnings("unchecked")
+    public static void loadDataFromFile(final Subject subject) { // 문제 정보 불러오기
+        final Path path = Paths.get(DATA_FILES.get(subject));
+        if (Files.exists(path)) {
+            try (final ObjectInputStream stream = new ObjectInputStream(
+                    new BufferedInputStream(Files.newInputStream(path)))) {
+                PROBLEMS.put(subject, (List<Problem>) stream.readObject());
+            } catch (IOException | ClassNotFoundException e) {
+            }
+        } else {
+            try {
+                Files.createFile(path);
+            } catch (IOException e) {
+            }
+        }
+    }
+
     public boolean registProblem(final Problem problem) { // 문제 등록: 과목 내에 동일한 문제 번호와 하위 번호 조합이 있을 경우 false
         if (problem.getImgSource() == null) {
             problem.setImgSource("nah");
@@ -94,23 +111,6 @@ public class TestManagementService {
             stream.writeObject(problems);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void loadDataFromFile(final Subject subject) { // 문제 정보 불러오기
-        final Path path = Paths.get(DATA_FILES.get(subject));
-        if (Files.exists(path)) {
-            try (final ObjectInputStream stream = new ObjectInputStream(
-                    new BufferedInputStream(Files.newInputStream(path)))) {
-                PROBLEMS.put(subject, (List<Problem>) stream.readObject());
-            } catch (IOException | ClassNotFoundException e) {
-            }
-        } else {
-            try {
-                Files.createFile(path);
-            } catch (IOException e) {
-            }
         }
     }
 

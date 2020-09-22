@@ -1,42 +1,21 @@
 package com.jlpt.retheviper.test.gui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import lombok.Getter;
 
-public class LoginStage extends Stage {
+import java.io.IOException;
 
-    public static Stage stage;
+public class LoginStage {
+
+    @Getter
+    private static Stage stage;
 
     public LoginStage() {
         try {
-            stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("LoginView.fxml"));
-            Parent root = loader.load();
-            stage.setTitle("학습자 로그인");
-            stage.setResizable(false);
-            final Scene longinScene = new Scene(root);
-            longinScene.setOnKeyPressed(event -> {
-                if (event.getCode().equals(KeyCode.ESCAPE)) {
-                    stage.close();
-                }
-            });
-            stage.setScene(longinScene);
+            stage = StageManager.create("LoginView.fxml", "학습자 로그인");
             stage.show();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    @SuppressWarnings("static-access")
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 }

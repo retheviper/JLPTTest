@@ -14,65 +14,44 @@ import java.util.ResourceBundle;
 
 public class ScoreViewControl implements Initializable {
 
+    private static final String COUNT = " 개";
+    private static final String IN_PROBLEM = " 문제 중 ";
+    private static final String OF_PROBLEM = " 문제";
     @FXML
     private Label totalCorrectLabel;
-
     @FXML
     private Label totalWrongLabel;
-
     @FXML
     private Label totalSolvedLabel;
-
     @FXML
     private Label totalGradeLabel;
-
     @FXML
     private Label vocaCorrectLabel;
-
     @FXML
     private Label vocaWrongLabel;
-
     @FXML
     private Label vocaSolvedLabel;
-
     @FXML
     private Label gramCorrectLabel;
-
     @FXML
     private Label gramWrongLabel;
-
     @FXML
     private Label gramSolvedLabel;
-
     @FXML
     private Label readCorrectLabel;
-
     @FXML
     private Label readWrongLabel;
-
     @FXML
     private Label readSolvedLabel;
-
     @FXML
     private Label listenCorrectLabel;
-
     @FXML
     private Label listenWrongLabel;
-
     @FXML
     private Label listenSolvedLabel;
-
     private int totalCorrect;
-
     private int totalWrong;
-
     private int totalSolved;
-
-    private static final String COUNT = " 개";
-
-    private static final String IN_PROBLEM = " 문제 중 ";
-
-    private static final String OF_PROBLEM = " 문제";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

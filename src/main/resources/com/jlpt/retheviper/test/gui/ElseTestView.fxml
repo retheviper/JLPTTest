@@ -4,8 +4,8 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="596.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8.0.141"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jlpt.retheviper.test.controller.ElseTestViewControl">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="596.0" prefWidth="706.0"
+            xmlns="http://javafx.com/javafx/8.0.141" fx:controller="com.jlpt.retheviper.test.controller.ElseTestViewControl">
     <children>
         <TextArea fx:id="passageArea" editable="false" layoutX="16.0" layoutY="98.0" prefHeight="285.0"
                   prefWidth="459.0" wrapText="true">

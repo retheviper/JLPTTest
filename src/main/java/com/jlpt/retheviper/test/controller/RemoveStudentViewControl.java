@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class RemoveStudentViewControl implements Initializable {
 
-    private StudentManagementService service = StudentManagementService.getInstance();
+    private final StudentManagementService service = StudentManagementService.getInstance();
 
     @FXML
     private Button cancelButton;
@@ -38,14 +38,14 @@ public class RemoveStudentViewControl implements Initializable {
                 doRemoveCheck();
             }
         });
-        this.cancelButton.setOnAction(event -> RemoveStudentStage.stage.hide());
+        this.cancelButton.setOnAction(event -> RemoveStudentStage.getStage().hide());
     }
 
     @FXML
     private void doRemoveCheck() {
         if (this.service.removeStudent(this.idField.getText(), this.passwordField.getText())) {
             CreateAlert.withoutHeader(AlertType.INFORMATION, "알림", "정상적으로 삭제되었습니다");
-            RemoveStudentStage.stage.hide();
+            RemoveStudentStage.getStage().hide();
         } else {
             CreateAlert.withoutHeader(AlertType.ERROR, "알림", "입력한 ID가 존재하지 않습니다");
         }

@@ -33,12 +33,12 @@ public class PrepareForTestViewControl implements Initializable {
     @FXML
     private Button cancelButton;
 
-    private ObservableList<String> subject = FXCollections.observableArrayList(Subject.VOCABULARY.getValue(),
+    private final ObservableList<String> subject = FXCollections.observableArrayList(Subject.VOCABULARY.getValue(),
             Subject.GRAMMER.getValue(), Subject.READ.getValue(), Subject.LISTEN.getValue());
 
-    private ObservableList<String> elseTimer = FXCollections.observableArrayList("정규(55분)", "숙련(40분)", "신속(25분)");
+    private final ObservableList<String> elseTimer = FXCollections.observableArrayList("정규(55분)", "숙련(40분)", "신속(25분)");
 
-    private ObservableList<String> listenTimer = FXCollections.observableArrayList("정규(50분)", "숙련(35분)", "신속(20분)");
+    private final ObservableList<String> listenTimer = FXCollections.observableArrayList("정규(50분)", "숙련(35분)", "신속(20분)");
 
     private void letTheTestBegin() {
         if (this.setSubject.getValue() == null) {
@@ -52,18 +52,16 @@ public class PrepareForTestViewControl implements Initializable {
                 CreateAlert.withoutHeader(AlertType.ERROR, "오류", "문제가 등록되어 있지 않습니다.\r\n관리자에게 문의하세요.");
                 return;
             }
-            switch (subject) { // 과목 선택에 따른 분기
-                case LISTEN:
-                    ListenTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                    new ListenTestStage();
-                    break;
-                default:
-                    ElseTestViewControl.setSubject(subject);
-                    ElseTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                    new ElseTestStage();
-                    break;
+            // 과목 선택에 따른 분기
+            if (subject == Subject.LISTEN) {
+                ListenTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
+                new ListenTestStage();
+            } else {
+                ElseTestViewControl.setSubject(subject);
+                ElseTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
+                new ElseTestStage();
             }
-            PrepareForTestStage.stage.hide();
+            PrepareForTestStage.getStage().hide();
             Main.getPrimaryStage().setIconified(true);
         }
     }
@@ -78,7 +76,7 @@ public class PrepareForTestViewControl implements Initializable {
         setSubject.valueProperty().addListener(event -> timerChange());
         setTimer.setItems(elseTimer);
         startTestButton.setOnAction(event -> letTheTestBegin());
-        cancelButton.setOnAction(event -> PrepareForTestStage.stage.hide());
+        cancelButton.setOnAction(event -> PrepareForTestStage.getStage().hide());
     }
 
 }

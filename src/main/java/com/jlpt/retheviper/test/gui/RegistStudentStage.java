@@ -1,25 +1,20 @@
 package com.jlpt.retheviper.test.gui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
 
-public class RegistStudentStage extends Stage {
+import java.io.IOException;
 
-    public static Stage stage;
+public class RegistStudentStage {
+
+    @Getter
+    private static Stage stage;
 
     public RegistStudentStage() {
         try {
-            stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("RegistStudentView.fxml"));
-            Parent root = loader.load();
-            stage.setTitle("학습자 등록");
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
+            stage = StageManager.create("RegistStudentView.fxml", "학습자 등록");
             stage.show();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

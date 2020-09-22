@@ -27,18 +27,6 @@ public class StudentManagementService {
 
     private static final Path PATH = Paths.get("StudentData.dat"); // 학습자 정보를 저장할 파일명
 
-    @Getter
-    @Setter(AccessLevel.PRIVATE)
-    private String loginedUser = ""; // 로그인한 유저 아이디를 기록
-
-    @Getter
-    @Setter
-    private boolean logined = false; // 로그인 여부
-
-    @Getter
-    @Setter
-    private boolean admin = false; // 관리자 로그인 여부
-
     static {
         if (Files.exists(PATH)) {
             try (final ObjectInputStream stream = new ObjectInputStream(
@@ -57,13 +45,23 @@ public class StudentManagementService {
         }
     }
 
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private String loginedUser = ""; // 로그인한 유저 아이디를 기록
+    @Getter
+    @Setter
+    private boolean logined = false; // 로그인 여부
+    @Getter
+    @Setter
+    private boolean admin = false; // 관리자 로그인 여부
+
     public Student getStudentData() {
         return STUDENT_DATA.get(loginedUser);
     }
 
     public boolean registStudent(final Student student) { // 학습자 등록
-        final boolean regiseted = STUDENT_DATA.containsKey(student.getId());
-        if (!regiseted) {
+        final boolean registered = STUDENT_DATA.containsKey(student.getId());
+        if (!registered) {
             final List<Score> defaultScore = Arrays.asList(
                     Score.builder().subject(Subject.VOCABULARY).correctAnswer(0).wrongAnswer(0).skippedAnswer(0)
                             .build(),
@@ -75,7 +73,7 @@ public class StudentManagementService {
             STUDENT_DATA.put(student.getId(), student);
             saveDataToFile();
         }
-        return !regiseted;
+        return !registered;
     }
 
     public boolean removeStudent(final String id, final String password) { // 학습자 삭제
