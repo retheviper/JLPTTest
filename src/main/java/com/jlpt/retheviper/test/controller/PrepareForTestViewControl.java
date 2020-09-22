@@ -55,11 +55,11 @@ public class PrepareForTestViewControl implements Initializable {
             // 과목 선택에 따른 분기
             if (subject == Subject.LISTEN) {
                 ListenTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                new ListenTestStage();
+                ListenTestStage.createStage();
             } else {
                 ElseTestViewControl.setSubject(subject);
                 ElseTestViewControl.timerSetting = setTimer.getSelectionModel().getSelectedIndex();
-                new ElseTestStage();
+                ElseTestStage.createStage();
             }
             PrepareForTestStage.getStage().hide();
             Main.getPrimaryStage().setIconified(true);

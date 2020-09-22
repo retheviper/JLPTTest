@@ -18,7 +18,7 @@ public class StageManager {
         loader.setLocation(StageManager.class.getResource(view));
         final Parent root = loader.load();
         final Stage stage = new Stage();
-        stage.setTitle("문제 등록");
+        stage.setTitle(title);
         stage.setResizable(false);
         final Scene scene = new Scene(root);
         scene.setOnKeyPressed(event -> {

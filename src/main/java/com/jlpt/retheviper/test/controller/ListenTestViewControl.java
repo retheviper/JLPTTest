@@ -56,9 +56,6 @@ public class ListenTestViewControl implements Initializable {
     private int skippedAnswer = 0; // 넘긴 문제 기록용
     private int settedTime = 0; // 설정된 시험 시간
     private boolean getStarted = false; // MP3 세팅 확인용
-    private Task<Void> task; // 시험 시간 측정용
-
-    private Thread thread; // task 설정
 
     public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -82,11 +79,7 @@ public class ListenTestViewControl implements Initializable {
                 this.startTestButton.setText("시작");
                 final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
                         "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-                if (result.get().equals(ButtonType.OK)) {
-                    StudentManagementService sm = StudentManagementService.getInstance();
-                    sm.recordScore(this.score);
-                    ListenTestStage.getStage().hide();
-                }
+                result.ifPresent(this::exiting);
                 break;
         }
     }
@@ -109,7 +102,8 @@ public class ListenTestViewControl implements Initializable {
     }
 
     private void startTimerProgress() { // 진행에 따른 경과 표시
-        task = new Task<Void>() {
+        // 시험 시간 측정용
+        final Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 for (int i = 0; i <= settedTime; i++) {
@@ -125,7 +119,8 @@ public class ListenTestViewControl implements Initializable {
 
         };
         timeProgress.progressProperty().bind(task.progressProperty());
-        thread = new Thread(task);
+        // task 설정
+        Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
     }
@@ -238,11 +233,7 @@ public class ListenTestViewControl implements Initializable {
         } else {
             final Optional<ButtonType> result = CreateAlert.withHeader(AlertType.CONFIRMATION, "정보", "마지막 문제",
                     "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-            if (result.get().equals(ButtonType.OK)) {
-                final StudentManagementService sm = StudentManagementService.getInstance();
-                sm.recordScore(score);
-                ListenTestStage.getStage().hide();
-            }
+            result.ifPresent(this::exiting);
         }
     }
 
@@ -252,8 +243,7 @@ public class ListenTestViewControl implements Initializable {
         } else {
             if ((problemNumber - 1) != -1) {
                 --skippedAnswer;
-                score.setSkippedAnswer(skippedAnswer);
-                skippedAnswerLabel.setText(skippedAnswer + "");
+                setSkip(skippedAnswer);
                 --problemNumber;
                 setProblem(problemNumber);
             } else {
@@ -268,13 +258,25 @@ public class ListenTestViewControl implements Initializable {
         } else {
             if ((problemNumber + 1) < this.tList.size()) {
                 ++skippedAnswer;
-                score.setSkippedAnswer(skippedAnswer);
-                skippedAnswerLabel.setText(skippedAnswer + "");
+                setSkip(skippedAnswer);
                 ++problemNumber;
                 setProblem(problemNumber);
             } else {
                 CreateAlert.withoutHeader(AlertType.INFORMATION, "정보", "더 이상 앞으로 갈 수 없습니다");
             }
+        }
+    }
+
+    private void setSkip(final int skippedAnswer) {
+        score.setSkippedAnswer(skippedAnswer);
+        this.skippedAnswerLabel.setText(String.valueOf(this.skippedAnswer));
+    }
+
+    private void exiting(final ButtonType type) {
+        if (type == ButtonType.OK) {
+            final StudentManagementService sm = StudentManagementService.getInstance();
+            sm.recordScore(score);
+            ListenTestStage.getStage().hide();
         }
     }
 

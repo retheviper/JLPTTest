@@ -1,10 +1,10 @@
 package com.jlpt.retheviper.test.controller;
 
+import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.bean.Problem;
 import com.jlpt.retheviper.test.bean.Score;
 import com.jlpt.retheviper.test.constant.Subject;
 import com.jlpt.retheviper.test.gui.ElseTestStage;
-import com.jlpt.retheviper.test.gui.ListenTestStage;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.service.TestManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
@@ -56,9 +56,6 @@ public class ElseTestViewControl implements Initializable {
     private int wrongAnswer = 0; // 오답 기록용
     private int skippedAnswer = 0; // 넘긴 문제 기록용
     private int settedTime = 0; // 설정된 시험 시간
-    private Task<Void> task; // 시험 시간 측정용
-
-    private Thread thread; // task 설정
 
     private void startTest() { // 시험 시작
         switch (this.startTestButton.getText()) {
@@ -76,11 +73,7 @@ public class ElseTestViewControl implements Initializable {
                 this.startTestButton.setText("시작");
                 final Optional<ButtonType> result = CreateAlert.withoutHeader(AlertType.CONFIRMATION, "정보",
                         "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-                if (result.get() == ButtonType.OK) {
-                    final StudentManagementService sm = StudentManagementService.getInstance();
-                    sm.recordScore(score);
-                    ListenTestStage.getStage().hide();
-                }
+                result.ifPresent(this::exiting);
                 break;
         }
 
@@ -104,7 +97,8 @@ public class ElseTestViewControl implements Initializable {
     }
 
     private void startTimerProgress() { // 진행에 따른 경과 표시
-        this.task = new Task<>() {
+        // 시험 시간 측정용
+        final Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 for (int i = 0; i <= settedTime; i++) {
@@ -117,10 +111,11 @@ public class ElseTestViewControl implements Initializable {
                 return null;
             }
         };
-        this.timeProgress.progressProperty().bind(this.task.progressProperty());
-        this.thread = new Thread(this.task);
-        this.thread.setDaemon(true);
-        this.thread.start();
+        this.timeProgress.progressProperty().bind(task.progressProperty());
+        // task 설정
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void setProblem(final int index) { // 문제를 세팅
@@ -193,13 +188,7 @@ public class ElseTestViewControl implements Initializable {
         } else {
             final Optional<ButtonType> result = CreateAlert.withHeader(AlertType.CONFIRMATION, "정보", "마지막 문제",
                     "성적을 저장하고 끝내시겠습니까?\r\n(기존의 성적을 덮어씁니다)");
-            if (result.get().equals(ButtonType.OK)) {
-                final StudentManagementService sm = StudentManagementService.getInstance();
-                sm.recordScore(score);
-                ElseTestStage.stage.hide();
-            } else {
-                // ... user chose CANCEL or closed the dialog
-            }
+            result.ifPresent(this::exiting);
         }
     }
 
@@ -209,8 +198,7 @@ public class ElseTestViewControl implements Initializable {
         } else {
             if ((this.problemNumber - 1) != -1) {
                 --this.skippedAnswer;
-                score.setSkippedAnswer(skippedAnswer);
-                this.skippedAnswerLabel.setText(this.skippedAnswer + "");
+                setSkip(skippedAnswer);
                 setProblem(--this.problemNumber);
             } else {
                 CreateAlert.withoutHeader(AlertType.INFORMATION, "정보", "더 이상 뒤로 갈 수 없습니다");
@@ -224,12 +212,24 @@ public class ElseTestViewControl implements Initializable {
         } else {
             if ((this.problemNumber + 1) < this.tList.size()) {
                 ++this.skippedAnswer;
-                score.setSkippedAnswer(skippedAnswer);
-                this.skippedAnswerLabel.setText(this.skippedAnswer + "");
+                setSkip(skippedAnswer);
                 setProblem(++this.problemNumber);
             } else {
                 CreateAlert.withoutHeader(AlertType.INFORMATION, "정보", "더 이상 앞으로 갈 수 없습니다");
             }
+        }
+    }
+
+    private void setSkip(final int skippedAnswer) {
+        score.setSkippedAnswer(skippedAnswer);
+        this.skippedAnswerLabel.setText(String.valueOf(this.skippedAnswer));
+    }
+
+    private void exiting(final ButtonType type) {
+        if (type == ButtonType.OK) {
+            final StudentManagementService sm = StudentManagementService.getInstance();
+            sm.recordScore(score);
+            ElseTestStage.getStage().hide();
         }
     }
 

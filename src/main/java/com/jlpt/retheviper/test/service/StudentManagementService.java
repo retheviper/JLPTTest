@@ -47,19 +47,19 @@ public class StudentManagementService {
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
-    private String loginedUser = ""; // 로그인한 유저 아이디를 기록
+    private String loginUser = ""; // 로그인한 유저 아이디를 기록
     @Getter
     @Setter
-    private boolean logined = false; // 로그인 여부
+    private boolean login = false; // 로그인 여부
     @Getter
     @Setter
     private boolean admin = false; // 관리자 로그인 여부
 
     public Student getStudentData() {
-        return STUDENT_DATA.get(loginedUser);
+        return STUDENT_DATA.get(loginUser);
     }
 
-    public boolean registStudent(final Student student) { // 학습자 등록
+    public boolean registerStudent(final Student student) { // 학습자 등록
         final boolean registered = STUDENT_DATA.containsKey(student.getId());
         if (!registered) {
             final List<Score> defaultScore = Arrays.asList(
@@ -88,8 +88,8 @@ public class StudentManagementService {
 
     public boolean login(final String id, final String password) { // 로그인 체크
         if (STUDENT_DATA.containsKey(id) && STUDENT_DATA.get(id).getPassword().equals(password)) {
-            setLoginedUser(id);
-            this.logined = true;
+            setLoginUser(id);
+            this.login = true;
             return true;
         } else {
             return false;
@@ -97,14 +97,15 @@ public class StudentManagementService {
     }
 
     public void recordScore(final Score score) { // 시험 당 점수 기록
-        final Student student = STUDENT_DATA.get(loginedUser);
+        final Student student = STUDENT_DATA.get(loginUser);
         final List<Score> scores = student.getScores();
         for (Score oldScore : scores) {
             if (oldScore.getSubject().equals(score.getSubject())) {
                 scores.set(scores.indexOf(oldScore), score);
-                return;
+                break;
             }
         }
+        STUDENT_DATA.put(loginUser, student);
         saveDataToFile();
     }
 

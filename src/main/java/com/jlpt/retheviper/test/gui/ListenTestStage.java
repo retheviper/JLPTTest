@@ -4,16 +4,19 @@ import com.jlpt.retheviper.test.Main;
 import com.jlpt.retheviper.test.controller.ListenTestViewControl;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ListenTestStage {
 
     @Getter
     private static Stage stage;
 
-    public ListenTestStage() {
+    public static void createStage() {
         try {
             stage = StageManager.create("ListenTestView.fxml", "청해 과목 모의고사");
             stage.show();

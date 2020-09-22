@@ -146,7 +146,7 @@ public class DataManagementViewControl implements Initializable {
     private void registerProblem() { // 문제 등록
         if (checkForm()) {
             checkAudioIncluded();
-            if (this.service.registProblem(getInputedProblem())) {
+            if (this.service.registerProblem(getInputtedProblem())) {
                 refreshBothTable();
                 CreateAlert.withoutHeader(AlertType.INFORMATION, "성공", "문제가 정상적으로 등록되었습니다");
             } else {
@@ -187,7 +187,7 @@ public class DataManagementViewControl implements Initializable {
     private void modifyProblem() { // 수정 버튼 클릭 시 테이블에서 대상을 선택하고 내용을 덮어씀
         if (checkForm() && checkTableItemSelected()) {
             checkAudioIncluded();
-            service.modifyProblem(getInputedProblem());
+            service.modifyProblem(getInputtedProblem());
             refreshBothTable();
             clearInputForm();
             CreateAlert.withoutHeader(AlertType.INFORMATION, "성공", "수정 내용이 반영되었습니다");
@@ -200,7 +200,7 @@ public class DataManagementViewControl implements Initializable {
         }
     }
 
-    private Problem getInputedProblem() {
+    private Problem getInputtedProblem() {
         final ProblemBuilder builder = Problem.builder().subject(Subject.getTypeByValues(this.subject_right.getValue()))
                 .pNumber(this.number_right.getText())
                 .subNumber(this.subNumber_right.getText())

@@ -15,8 +15,10 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -51,7 +53,7 @@ public class MainViewControl implements Initializable {
     private String grade = "F";
 
     private void printTestResult() { // 성적 출력
-        if (this.service.isLogined()) {
+        if (this.service.isLogin()) {
             checkAndSetScore();
             if (this.totalSolved == 0) {
                 CreateAlert.withoutHeader(AlertType.ERROR, "오류", "문제를 푼 이력이 없습니다");
@@ -60,64 +62,60 @@ public class MainViewControl implements Initializable {
             checkAndSetScore();
             final LocalDate date = LocalDate.now();
             final String theDate = date.format(DateTimeFormatter.ISO_DATE);
-
-            final String theScore = new StringBuilder()
-                    .append(this.service.getLoginedUser())
-                    .append("님의 시험 결과  (")
-                    .append(theDate)
-                    .append(")\r\n\r\n================\r\n◈ 언어지식(문자·어휘)\r\n================\r\n▶ 정답: ")
-                    .append(this.vocaScore.getCorrectAnswer())
-                    .append(" 개\r\n▶ 오답: ")
-                    .append(this.vocaScore.getWrongAnswer())
-                    .append(" 개\r\n▶ 넘긴 문제: ")
-                    .append(this.vocaScore.getSkippedAnswer())
-                    .append(" 개\r\n\r\n================\r\n◈ 언어지식(문법)\r\n================\r\n▶ 정답: ")
-                    .append(this.gramScore.getCorrectAnswer())
-                    .append(" 개\r\n▶ 오답: ")
-                    .append(this.gramScore.getWrongAnswer())
-                    .append(" 개\r\n▶ 넘긴 문제: ")
-                    .append(this.gramScore.getSkippedAnswer())
-                    .append(" 개\r\n\r\n================\r\n◈ 독해\r\n================\r\n▶ 정답: ")
-                    .append(this.readScore.getCorrectAnswer())
-                    .append(" 개\r\n▶ 오답: ")
-                    .append(this.readScore.getWrongAnswer())
-                    .append(" 개\r\n▶ 넘긴 문제: ")
-                    .append(this.readScore.getSkippedAnswer())
-                    .append(" 개\r\n\r\n================\r\n◈ 청해\r\n================\r\n▶ 정답: ")
-                    .append(this.listenScore.getCorrectAnswer())
-                    .append(" 개\r\n▶ 오답: ")
-                    .append(this.listenScore.getWrongAnswer())
-                    .append(" 개\r\n▶ 넘긴 문제: ")
-                    .append(this.listenScore.getSkippedAnswer())
-                    .append(" 개\r\n\r\n================\r\n▣ 종합 결과\r\n================\r\n▶ 총 정답 수: ")
-                    .append(this.totalCorrect)
-                    .append(" 개\r\n▶ 총 오답 수: ")
-                    .append(this.totalWrong)
-                    .append(" 개\r\n▶ 총 넘긴 문제: ")
-                    .append(this.totalSkipped)
-                    .append(" 개\r\n▶ 총 푼 문제: ")
-                    .append(this.totalSolved)
-                    .append(" 개\r\n\r\n▷ 종합 평가등급: ")
-                    .append(this.grade)
-                    .append(" 등급")
-                    .toString();
+            final String theScore = this.service.getLoginUser() +
+                    "님의 시험 결과  (" +
+                    theDate +
+                    ")\r\n\r\n================\r\n◈ 언어지식(문자·어휘)\r\n================\r\n▶ 정답: " +
+                    this.vocaScore.getCorrectAnswer() +
+                    " 개\r\n▶ 오답: " +
+                    this.vocaScore.getWrongAnswer() +
+                    " 개\r\n▶ 넘긴 문제: " +
+                    this.vocaScore.getSkippedAnswer() +
+                    " 개\r\n\r\n================\r\n◈ 언어지식(문법)\r\n================\r\n▶ 정답: " +
+                    this.gramScore.getCorrectAnswer() +
+                    " 개\r\n▶ 오답: " +
+                    this.gramScore.getWrongAnswer() +
+                    " 개\r\n▶ 넘긴 문제: " +
+                    this.gramScore.getSkippedAnswer() +
+                    " 개\r\n\r\n================\r\n◈ 독해\r\n================\r\n▶ 정답: " +
+                    this.readScore.getCorrectAnswer() +
+                    " 개\r\n▶ 오답: " +
+                    this.readScore.getWrongAnswer() +
+                    " 개\r\n▶ 넘긴 문제: " +
+                    this.readScore.getSkippedAnswer() +
+                    " 개\r\n\r\n================\r\n◈ 청해\r\n================\r\n▶ 정답: " +
+                    this.listenScore.getCorrectAnswer() +
+                    " 개\r\n▶ 오답: " +
+                    this.listenScore.getWrongAnswer() +
+                    " 개\r\n▶ 넘긴 문제: " +
+                    this.listenScore.getSkippedAnswer() +
+                    " 개\r\n\r\n================\r\n▣ 종합 결과\r\n================\r\n▶ 총 정답 수: " +
+                    this.totalCorrect +
+                    " 개\r\n▶ 총 오답 수: " +
+                    this.totalWrong +
+                    " 개\r\n▶ 총 넘긴 문제: " +
+                    this.totalSkipped +
+                    " 개\r\n▶ 총 푼 문제: " +
+                    this.totalSolved +
+                    " 개\r\n\r\n▷ 종합 평가등급: " +
+                    this.grade +
+                    " 등급";
             final FileChooser fileChooser = new FileChooser();
             final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-            fileChooser.setInitialFileName(theDate + "_" + this.service.getLoginedUser() + "_시험결과");
+            fileChooser.setInitialFileName(theDate + "_" + this.service.getLoginUser() + "_시험결과");
             fileChooser.setTitle("학습자 성적 출력");
             fileChooser.getExtensionFilters().add(extFilter);
             final File file = fileChooser.showSaveDialog(Main.getPrimaryStage());
             if (file != null) {
-                SaveFile(theScore, file);
+                saveFile(theScore, file);
             }
         } else {
-            CreateAlert.withoutHeader(AlertType.ERROR, "오류", "학습자 로그인이 필요합니다");
+            needLogin();
         }
     }
 
     private void checkAndSetScore() { // 점수 저장 여부 확인 및 세팅
         final List<Score> scores = this.service.getStudentData().getScores();
-
         scores.forEach(s -> {
             this.totalCorrect += s.getCorrectAnswer();
             this.totalWrong += s.getWrongAnswer();
@@ -141,55 +139,57 @@ public class MainViewControl implements Initializable {
         this.grade = Calculater.calculateGrade(this.totalCorrect, this.totalSolved);
     }
 
-    private void SaveFile(final String content, final File file) { // TXT 기록용
+    private void saveFile(final String content, final File file) { // TXT 기록용
         try {
-            final FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
-        } catch (Exception ex) {
-
+            Files.writeString(file.toPath(), content, StandardOpenOption.CREATE_NEW);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    private void needLogin() {
+        CreateAlert.withoutHeader(AlertType.ERROR, "오류", "학습자 로그인이 필요합니다");
     }
 
     private void startTest() { // 시험 시작
-        if (this.service.isLogined()) {
-            new PrepareForTestStage();
+        if (this.service.isLogin()) {
+            PrepareForTestStage.createStage();
         } else {
-            CreateAlert.withoutHeader(AlertType.ERROR, "오류", "학습자 로그인이 필요합니다");
+            needLogin();
         }
     }
 
-    private void registStudent() { // 학습자 등록
-        if (this.service.isLogined()) {
+    private void registerStudent() { // 학습자 등록
+        if (this.service.isLogin()) {
             CreateAlert.withoutHeader(AlertType.ERROR, "오류", "먼저 로그아웃 해 주십시오");
         } else {
-            new RegistStudentStage();
+            needLogin();
         }
     }
 
     private void removeStudent() { // 학습자 삭제
-        if (this.service.isLogined()) {
+        if (this.service.isLogin()) {
             CreateAlert.withoutHeader(AlertType.ERROR, "오류", "먼저 로그아웃 해 주십시오");
         } else {
-            new RemoveStudentStage();
+            RemoveStudentStage.createStage();
         }
     }
 
     private void loginStudent() { // 학습자 로그인
-        if (this.service.isLogined()) {
-            this.service.setLogined(false);
+        if (this.service.isLogin()) {
+            this.service.setLogin(false);
             Main.getPrimaryStage().setTitle("JLPT Test Ver 0.1");
             CreateAlert.withoutHeader(AlertType.INFORMATION, "알림", "로그아웃 했습니다");
         } else {
-            new LoginStage();
+            LoginStage.createStage();
         }
     }
 
     private void viewScore() { // 학습자 성적 확인 창
-        if (this.service.isLogined()) {
-            new ScoreStage();
+        if (this.service.isLogin()) {
+            ScoreStage.createStage();
         } else {
-            CreateAlert.withoutHeader(AlertType.ERROR, "오류", "학습자 로그인이 필요합니다");
+            needLogin();
         }
     }
 
@@ -215,7 +215,7 @@ public class MainViewControl implements Initializable {
 
     private void dataManagement() { // 문제 관리 창 띄우기
         if (this.service.isAdmin()) {
-            new DataManagementStage();
+            DataManagementStage.createStage();
         } else {
             CreateAlert.withoutHeader(AlertType.ERROR, "오류", "관리자 로그인이 필요합니다");
         }
@@ -225,7 +225,7 @@ public class MainViewControl implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.print_m.setOnAction(event -> printTestResult());
         this.exit_m.setOnAction(event -> Platform.exit());
-        this.registStudent_m.setOnAction(event -> registStudent());
+        this.registStudent_m.setOnAction(event -> registerStudent());
         this.removeStudent_m.setOnAction(event -> removeStudent());
         this.loginStudent_m.setOnAction(event -> loginStudent());
         this.startTest_m.setOnAction(event -> startTest());

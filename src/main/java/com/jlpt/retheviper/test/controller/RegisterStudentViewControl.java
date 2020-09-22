@@ -1,7 +1,7 @@
 package com.jlpt.retheviper.test.controller;
 
 import com.jlpt.retheviper.test.bean.Student;
-import com.jlpt.retheviper.test.gui.RegistStudentStage;
+import com.jlpt.retheviper.test.gui.RegisterStudentStage;
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import com.jlpt.retheviper.test.util.CreateAlert;
 import javafx.fxml.FXML;
@@ -15,12 +15,12 @@ import javafx.scene.input.KeyCode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistStudentViewControl implements Initializable {
+public class RegisterStudentViewControl implements Initializable {
 
     private final StudentManagementService service = StudentManagementService.getInstance();
 
     @FXML
-    private Button registButton;
+    private Button registerButton;
 
     @FXML
     private Button cancelButton;
@@ -33,21 +33,21 @@ public class RegistStudentViewControl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.registButton.setOnAction(event -> doRegistCheck());
+        this.registerButton.setOnAction(event -> doRegisterCheck());
         this.passwordField.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
-                doRegistCheck();
+                doRegisterCheck();
             }
         });
-        this.cancelButton.setOnAction(event -> RegistStudentStage.getStage().hide());
+        this.cancelButton.setOnAction(event -> RegisterStudentStage.getStage().hide());
     }
 
     @FXML
-    private void doRegistCheck() {
+    private void doRegisterCheck() {
         if (this.service
-                .registStudent(Student.builder().id(idField.getText()).password(passwordField.getText()).build())) {
+                .registerStudent(Student.builder().id(idField.getText()).password(passwordField.getText()).build())) {
             CreateAlert.withoutHeader(AlertType.INFORMATION, "알림", "정상적으로 등록되었습니다");
-            RegistStudentStage.getStage().hide();
+            RegisterStudentStage.getStage().hide();
         } else {
             CreateAlert.withoutHeader(AlertType.ERROR, "알림", "입력한 ID로는 등록할 수 없습니다");
         }

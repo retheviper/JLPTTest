@@ -32,9 +32,9 @@ public class TestManagementService {
     private static final Map<Subject, String> DATA_FILES = new HashMap<>() {
         {
             put(Subject.VOCABULARY, "DATA_N2V.dat");
-            put(Subject.GRAMMER, "DATA_N2V.dat");
-            put(Subject.READ, "DATA_N2V.dat");
-            put(Subject.LISTEN, "DATA_N2V.dat");
+            put(Subject.GRAMMER, "DATA_N2G.dat");
+            put(Subject.READ, "DATA_N2R.dat");
+            put(Subject.LISTEN, "DATA_N2L.dat");
 
         }
     };
@@ -60,7 +60,7 @@ public class TestManagementService {
         }
     }
 
-    public boolean registProblem(final Problem problem) { // 문제 등록: 과목 내에 동일한 문제 번호와 하위 번호 조합이 있을 경우 false
+    public boolean registerProblem(final Problem problem) { // 문제 등록: 과목 내에 동일한 문제 번호와 하위 번호 조합이 있을 경우 false
         if (problem.getImgSource() == null) {
             problem.setImgSource("nah");
         }
@@ -94,14 +94,14 @@ public class TestManagementService {
 
     public void copyFile(final File file) { // 파일 복사 메소드(mp3일 경우 mp3 폴더에, 이미지 파일일 경우 img 폴더에)
         final String fileName = file.getName();
-        final String extension = Optional.ofNullable(fileName).filter(n -> n.contains("."))
-                .map(n -> n.substring(fileName.lastIndexOf(".") + 1)).get();
+        final String extension = Optional.of(fileName).filter(n -> n.contains("."))
+                .map(n -> n.substring(fileName.lastIndexOf(".") + 1)).orElseThrow(RuntimeException::new);
         final Path target = Paths.get(extension.equals("mp3") || extension.equals("MP3") ? "./mp3" : "./img", fileName);
 
         try {
             Files.copy(file.toPath(), target, StandardCopyOption.COPY_ATTRIBUTES);
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

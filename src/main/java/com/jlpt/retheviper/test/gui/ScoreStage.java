@@ -2,14 +2,17 @@ package com.jlpt.retheviper.test.gui;
 
 import com.jlpt.retheviper.test.service.StudentManagementService;
 import javafx.stage.Stage;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
-public class ScoreStage extends Stage {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class ScoreStage {
 
-    public ScoreStage() {
+    public static void createStage() {
         try {
-            final Stage stage = StageManager.create("ScoreView.fxml", StudentManagementService.getInstance().getLoginedUser() + "님의 점수");
+            final Stage stage = StageManager.create("ScoreView.fxml", StudentManagementService.getInstance().getLoginUser() + "님의 점수");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

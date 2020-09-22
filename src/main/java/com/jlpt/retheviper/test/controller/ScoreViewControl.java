@@ -67,29 +67,29 @@ public class ScoreViewControl implements Initializable {
         scores.stream().filter(s -> s.getSubject().equals(Subject.VOCABULARY)).findAny().ifPresent(s -> {
             this.vocaCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
             this.vocaWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.vocaSolvedLabel.setText(new StringBuilder().append(scores.size()).append(IN_PROBLEM)
-                    .append(this.totalSolved).append(OF_PROBLEM).toString()); // TODO 전체문제사이즈
+            this.vocaSolvedLabel.setText(scores.size() + IN_PROBLEM +
+                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
         });
 
         scores.stream().filter(s -> s.getSubject().equals(Subject.GRAMMER)).findAny().ifPresent(s -> {
             this.gramCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
             this.gramWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.gramSolvedLabel.setText(new StringBuilder().append(scores.size()).append(IN_PROBLEM)
-                    .append(this.totalSolved).append(OF_PROBLEM).toString()); // TODO 전체문제사이즈
+            this.gramSolvedLabel.setText(scores.size() + IN_PROBLEM +
+                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
         });
 
         scores.stream().filter(s -> s.getSubject().equals(Subject.READ)).findAny().ifPresent(s -> {
             this.readCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
             this.readWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.readSolvedLabel.setText(new StringBuilder().append(scores.size()).append(IN_PROBLEM)
-                    .append(this.totalSolved).append(OF_PROBLEM).toString()); // TODO 전체문제사이즈
+            this.readSolvedLabel.setText(scores.size() + IN_PROBLEM +
+                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
         });
 
         scores.stream().filter(s -> s.getSubject().equals(Subject.LISTEN)).findAny().ifPresent(s -> {
             this.listenCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
             this.listenWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.listenSolvedLabel.setText(new StringBuilder().append(scores.size()).append(IN_PROBLEM)
-                    .append(this.totalSolved).append(OF_PROBLEM).toString()); // TODO 전체문제사이즈
+            this.listenSolvedLabel.setText(scores.size() + IN_PROBLEM +
+                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
         });
 
         totalCorrectLabel.setText(totalCorrect + " 개");
