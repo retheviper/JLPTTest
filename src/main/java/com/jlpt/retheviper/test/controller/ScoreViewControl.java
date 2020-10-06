@@ -58,43 +58,44 @@ public class ScoreViewControl implements Initializable {
 
         final List<Score> scores = StudentManagementService.getInstance().getStudentData().getScores();
 
+        final int total = scores.size();
+
         scores.forEach(s -> {
             totalCorrect += s.getCorrectAnswer();
             totalWrong += s.getWrongAnswer();
             totalSolved += s.getCorrectAnswer() + s.getWrongAnswer();
+
+            final String correct = String.format("%d%s", s.getCorrectAnswer(), COUNT);
+            final String wrong = String.format("%d%s", s.getWrongAnswer(), COUNT);
+            final String solved = String.format("%d%s%d%s", total, IN_PROBLEM, this.totalSolved, OF_PROBLEM);
+
+            switch (s.getSubject()) {
+                case GRAMMER:
+                    this.gramCorrectLabel.setText(correct);
+                    this.gramWrongLabel.setText(wrong);
+                    this.gramSolvedLabel.setText(solved);
+                    break;
+                case VOCABULARY:
+                    this.vocaCorrectLabel.setText(correct);
+                    this.vocaWrongLabel.setText(wrong);
+                    this.vocaSolvedLabel.setText(solved);
+                    break;
+                case READ:
+                    this.readCorrectLabel.setText(correct);
+                    this.readWrongLabel.setText(wrong);
+                    this.readSolvedLabel.setText(solved);
+                    break;
+                case LISTEN:
+                    this.listenCorrectLabel.setText(correct);
+                    this.listenWrongLabel.setText(wrong);
+                    this.listenSolvedLabel.setText(solved);
+                    break;
+            }
         });
 
-        scores.stream().filter(s -> s.getSubject().equals(Subject.VOCABULARY)).findAny().ifPresent(s -> {
-            this.vocaCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
-            this.vocaWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.vocaSolvedLabel.setText(scores.size() + IN_PROBLEM +
-                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
-        });
-
-        scores.stream().filter(s -> s.getSubject().equals(Subject.GRAMMER)).findAny().ifPresent(s -> {
-            this.gramCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
-            this.gramWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.gramSolvedLabel.setText(scores.size() + IN_PROBLEM +
-                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
-        });
-
-        scores.stream().filter(s -> s.getSubject().equals(Subject.READ)).findAny().ifPresent(s -> {
-            this.readCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
-            this.readWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.readSolvedLabel.setText(scores.size() + IN_PROBLEM +
-                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
-        });
-
-        scores.stream().filter(s -> s.getSubject().equals(Subject.LISTEN)).findAny().ifPresent(s -> {
-            this.listenCorrectLabel.setText(s.getCorrectAnswer() + COUNT);
-            this.listenWrongLabel.setText(s.getWrongAnswer() + COUNT);
-            this.listenSolvedLabel.setText(scores.size() + IN_PROBLEM +
-                    this.totalSolved + OF_PROBLEM); // TODO 전체문제사이즈
-        });
-
-        totalCorrectLabel.setText(totalCorrect + " 개");
-        totalWrongLabel.setText(totalWrong + " 개");
-        totalSolvedLabel.setText(totalSolved + " 문제");
+        totalCorrectLabel.setText(String.format("%d 개", totalCorrect));
+        totalWrongLabel.setText(String.format("%d 개", totalWrong));
+        totalSolvedLabel.setText(String.format("%d 문제", totalSolved));
 
         totalGradeLabel.setText(Calculator.calculateGrade(totalCorrect, totalSolved));
     }

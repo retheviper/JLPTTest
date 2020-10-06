@@ -62,47 +62,10 @@ public class MainViewControl implements Initializable {
             checkAndSetScore();
             final LocalDate date = LocalDate.now();
             final String theDate = date.format(DateTimeFormatter.ISO_DATE);
-            final String theScore = this.service.getLoginUser() +
-                    "님의 시험 결과  (" +
-                    theDate +
-                    ")\r\n\r\n================\r\n◈ 언어지식(문자·어휘)\r\n================\r\n▶ 정답: " +
-                    this.vocaScore.getCorrectAnswer() +
-                    " 개\r\n▶ 오답: " +
-                    this.vocaScore.getWrongAnswer() +
-                    " 개\r\n▶ 넘긴 문제: " +
-                    this.vocaScore.getSkippedAnswer() +
-                    " 개\r\n\r\n================\r\n◈ 언어지식(문법)\r\n================\r\n▶ 정답: " +
-                    this.gramScore.getCorrectAnswer() +
-                    " 개\r\n▶ 오답: " +
-                    this.gramScore.getWrongAnswer() +
-                    " 개\r\n▶ 넘긴 문제: " +
-                    this.gramScore.getSkippedAnswer() +
-                    " 개\r\n\r\n================\r\n◈ 독해\r\n================\r\n▶ 정답: " +
-                    this.readScore.getCorrectAnswer() +
-                    " 개\r\n▶ 오답: " +
-                    this.readScore.getWrongAnswer() +
-                    " 개\r\n▶ 넘긴 문제: " +
-                    this.readScore.getSkippedAnswer() +
-                    " 개\r\n\r\n================\r\n◈ 청해\r\n================\r\n▶ 정답: " +
-                    this.listenScore.getCorrectAnswer() +
-                    " 개\r\n▶ 오답: " +
-                    this.listenScore.getWrongAnswer() +
-                    " 개\r\n▶ 넘긴 문제: " +
-                    this.listenScore.getSkippedAnswer() +
-                    " 개\r\n\r\n================\r\n▣ 종합 결과\r\n================\r\n▶ 총 정답 수: " +
-                    this.totalCorrect +
-                    " 개\r\n▶ 총 오답 수: " +
-                    this.totalWrong +
-                    " 개\r\n▶ 총 넘긴 문제: " +
-                    this.totalSkipped +
-                    " 개\r\n▶ 총 푼 문제: " +
-                    this.totalSolved +
-                    " 개\r\n\r\n▷ 종합 평가등급: " +
-                    this.grade +
-                    " 등급";
+            final String theScore = String.format("%s님의 시험 결과  (%s)\r\n\r\n================\r\n◈ 언어지식(문자·어휘)\r\n================\r\n▶ 정답: %d 개\r\n▶ 오답: %d 개\r\n▶ 넘긴 문제: %d 개\r\n\r\n================\r\n◈ 언어지식(문법)\r\n================\r\n▶ 정답: %d 개\r\n▶ 오답: %d 개\r\n▶ 넘긴 문제: %d 개\r\n\r\n================\r\n◈ 독해\r\n================\r\n▶ 정답: %d 개\r\n▶ 오답: %d 개\r\n▶ 넘긴 문제: %d 개\r\n\r\n================\r\n◈ 청해\r\n================\r\n▶ 정답: %d 개\r\n▶ 오답: %d 개\r\n▶ 넘긴 문제: %d 개\r\n\r\n================\r\n▣ 종합 결과\r\n================\r\n▶ 총 정답 수: %d 개\r\n▶ 총 오답 수: %d 개\r\n▶ 총 넘긴 문제: %d 개\r\n▶ 총 푼 문제: %d 개\r\n\r\n▷ 종합 평가등급: %s 등급", this.service.getLoginUser(), theDate, this.vocaScore.getCorrectAnswer(), this.vocaScore.getWrongAnswer(), this.vocaScore.getSkippedAnswer(), this.gramScore.getCorrectAnswer(), this.gramScore.getWrongAnswer(), this.gramScore.getSkippedAnswer(), this.readScore.getCorrectAnswer(), this.readScore.getWrongAnswer(), this.readScore.getSkippedAnswer(), this.listenScore.getCorrectAnswer(), this.listenScore.getWrongAnswer(), this.listenScore.getSkippedAnswer(), this.totalCorrect, this.totalWrong, this.totalSkipped, this.totalSolved, this.grade);
             final FileChooser fileChooser = new FileChooser();
             final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-            fileChooser.setInitialFileName(theDate + "_" + this.service.getLoginUser() + "_시험결과");
+            fileChooser.setInitialFileName(String.format("%s_%s_시험결과", theDate, this.service.getLoginUser()));
             fileChooser.setTitle("학습자 성적 출력");
             fileChooser.getExtensionFilters().add(extFilter);
             final File file = fileChooser.showSaveDialog(Main.getPrimaryStage());

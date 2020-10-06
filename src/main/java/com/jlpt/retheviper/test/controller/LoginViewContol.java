@@ -33,8 +33,8 @@ public class LoginViewContol implements Initializable {
 
     private void doLoginCheck() {
         if (this.service.login(this.idField.getText(), this.passwordField.getText())) {
-            CreateAlert.withHeader(AlertType.INFORMATION, "알림", "로그인 성공", service.getLoginUser() + " 님, 환영합니다");
-            Main.getPrimaryStage().setTitle("JLPT Test Ver 0.1 (학습자 " + service.getLoginUser() + " 로그인함)");
+            CreateAlert.withHeader(AlertType.INFORMATION, "알림", "로그인 성공", String.format("%s 님, 환영합니다", service.getLoginUser()));
+            Main.getPrimaryStage().setTitle(String.format("JLPT Test Ver 0.1 (학습자 %s 로그인함)", service.getLoginUser()));
             LoginStage.getStage().hide();
         } else {
             CreateAlert.withHeader(AlertType.ERROR, "알림", "로그인 실패", "ID나 비밀번호를 확인하세요");

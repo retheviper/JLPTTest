@@ -98,7 +98,7 @@ public class ElseTestViewControl implements Initializable {
         // 시험 시간 측정용
         final Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 for (int i = 0; i <= setTime; i++) {
                     updateProgress(i, setTime);
                     try {
@@ -171,7 +171,7 @@ public class ElseTestViewControl implements Initializable {
         if (this.tList.get(this.problemNumber).getAnswer() == this.selectedAnswer) {
             this.correctAnswer++;
             score.setCorrectAnswer(correctAnswer);
-            this.correctAnswerLabel.setText(this.correctAnswer + "");
+            this.correctAnswerLabel.setText(String.format("%d", this.correctAnswer));
             CreateAlert.withoutHeader(AlertType.INFORMATION, "정답", "정답입니다");
         } else {
             this.wrongAnswer++;
@@ -179,7 +179,7 @@ public class ElseTestViewControl implements Initializable {
             this.wrongAnswerLabel.setText(this.wrongAnswer + "");
             CreateAlert.withoutHeader(AlertType.ERROR, "오답", "오답입니다");
         }
-        this.totalProblemLabel.setText(this.correctAnswer + this.wrongAnswer + "");
+        this.totalProblemLabel.setText(String.format("%d", this.correctAnswer + this.wrongAnswer));
         if (this.tList.size() > this.problemNumber + 1) {
             this.problemNumber++;
             setProblem(this.problemNumber);
