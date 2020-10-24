@@ -1,5 +1,7 @@
 # JLPT(Japanese Language Personal Training) Test
 
+![](/misc/img/banner.jpg)
+
 ## 개요
 
 입사 전 포트폴리오로 진행했던 프로젝트.
@@ -19,6 +21,10 @@ JavaFXを試すためのテストベッド。
 ## To run
 
 `./gradlew run`
+
+## Administrator mode
+
+The password is `1234`.
 
 ## Screenshot
 
