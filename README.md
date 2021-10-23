@@ -2,6 +2,8 @@
 
 ![](/misc/img/banner.jpg)
 
+<a href="https://foojay.io/works-with-openjdk"><img align="right" src="https://github.com/foojayio/badges/raw/main/works_with_openjdk/Works-with-OpenJDK.png" width="100"></a>
+
 ## 개요
 
 입사 전 포트폴리오로 진행했던 프로젝트.
